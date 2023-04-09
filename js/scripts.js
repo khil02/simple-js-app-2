@@ -15,6 +15,8 @@ let pokemonlist= [
         type: ['grass', 'poison']
     }
 ]; 
+//testing that array is working
 console.log(pokemonlist[1]);
 pokemonlist[3] = {name: "Charmander", height: 2, type: ['fire']};  
+//verifying new object was added to array correctly
 console.log(pokemonlist[3]);
