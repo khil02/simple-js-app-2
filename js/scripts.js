@@ -22,9 +22,10 @@ pokemonlist[3] = {name: "Charmander", height: 2.00, type: ['fire']};
 console.log(pokemonlist[3]);
 
 //For let to write out all pokemon on list currently
-for (let i=0; i < pokemonlist.length; i++){
-    document.write('<p>' + pokemonlist[i].name  + '<br>' + "  height: (" + pokemonlist[i].height + ")" )
+pokemonlist.forEach(function(pokemon) {
+    document.write('<p>' + pokemon.name  + '<br>' + "  height: (" + pokemon.height + ")" )
     //If statement stating if it is a "big" pokemon
-    let big = pokemonlist[i].height > 6 ? '<br>' + "That's a big one!" : "";
+    let big = pokemon.height > 6 ? '<br>' + "That's a big one!" : "";
     document.write(big);
-}
+    
+});
