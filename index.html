@@ -7,6 +7,11 @@
     <title>Simple JS App</title>
   </head>
   <body>
+    <button onclick="pokemonRepository.getAll()">Show all</button>
+    <input type="searchBox" id="searchFor" name ="q" placeholder="Search">
+    <button onclick="pokemonRepository.search(getElementById('searchFor').value)">Search</button>
+    <div>"Pokemon in list, Charmander, Bulbasuar, Ivyasuar, Venusuar"</div>
     <script src="js/scripts.js"></script>
+    
   </body>
 </html>

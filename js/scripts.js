@@ -48,6 +48,13 @@ function add(pokemon){
 }
 //outputs a full list of the pokemon
 function getAll(){
+    pokemonlist.forEach(function(pokemon) {
+        document.write('<p>' + pokemon.name  + '<br>' + "  height: (" + pokemon.height + ")"+'</p>' )
+        //If statement stating if it is a "big" pokemon
+        let big = pokemon.height > 6 ? '<br>' + "That's a big one!" : "";
+        document.write(big);
+        
+    });
     return pokemonlist;
 }
 // searches list for matching name
@@ -82,16 +89,17 @@ pokemonRepository.add({name: "Charmander", height: 2.00, type: ['fire']});
 pokemonRepository.add({name: "Charmander", type: ['fire']}); 
 pokemonRepository.add("Test");   
 
+//#####Legacy code, to be removed
 //ForEach to write out all pokemon on list currently
-pokemonRepository.getAll().forEach(function(pokemon) {
+/*pokemonRepository.getAll().forEach(function(pokemon) {
     document.write('<p>' + pokemon.name  + '<br>' + "  height: (" + pokemon.height + ")" )
     //If statement stating if it is a "big" pokemon
     let big = pokemon.height > 6 ? '<br>' + "That's a big one!" : "";
     document.write(big);
     
-});
+});*/
 // searchs for specific name
-pokemonRepository.search("Charmander");
+//pokemonRepository.search("Charmander");
 
 
 
