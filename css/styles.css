@@ -1,6 +1,12 @@
 body{
-    background-color: beige;
+    background-color: rgb(132, 2, 24);
     align-content: center;
+}
+h1{
+    color: whitesmoke;
+    background-color: rgb(191, 30, 30);
+    border: 3px solid rgb(66, 66, 66);
+    padding-left: 5px;
 }
 p{
     text-align: center;
@@ -9,4 +15,29 @@ p{
     padding:25px;
     margin:50px;
     margin-trim: 50px;
+}
+.pokedexButton {
+    background-color:darkblue;
+    padding: 16px 32px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border: none;
+    margin: 4px 2px;
+    display: inline-block;
+    transition-duration: .4s;
+    cursor: pointer;
+    border: 3px solid rgb(191, 30, 30);
+    min-width: 25%;
+}
+.pokedexButton:hover{
+    opacity: .7;
+}
+li{
+    list-style: none;
+}
+ul{
+    background-color: rgb(28, 46, 46);
+    border: 3px solid whitesmoke;
 }
