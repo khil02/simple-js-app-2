@@ -23,11 +23,11 @@ function add(pokemon){
         const keysBaseline = ["name", "height", "type"];
         const keysAdded = Object.keys(pokemon);
 
-        if (keysBaseline.length !== keysAdded){
+        if (keysBaseline.length !== keysAdded.length){
             return false;
         }
         for (let key of keysBaseline){
-            if (keysBaseline[key] !== pokemon[key]){
+            if (!pokemon[key]){
                 return false;
             }
         }
@@ -48,13 +48,6 @@ function add(pokemon){
 }
 //outputs a full list of the pokemon
 function getAll(){
-    pokemonlist.forEach(function(pokemon) {
-        document.write('<p>' + pokemon.name  + '<br>' + "  height: (" + pokemon.height + ")"+'</p>' )
-        //If statement stating if it is a "big" pokemon
-        let big = pokemon.height > 6 ? '<br>' + "That's a big one!" : "";
-        document.write(big);
-        
-    });
     return pokemonlist;
 }
 // searches list for matching name
@@ -62,6 +55,7 @@ function search(findMe){
     let result = pokemonlist.filter((e) => e.name == findMe);
     if (result.length !== 0){
     console.log(result);
+    
     //Prints out found information
     result.forEach(function(pokemon) {
         document.write('<p>' + pokemon.name  + '<br>' + "  height: (" + pokemon.height + ")" )});    
@@ -76,10 +70,28 @@ function search(findMe){
         return result;
     }
 }
+function addListItem(pokemon){
+    let pokedex = document.querySelector('.pokemon-list');
+    let listItem = document.createElement('li');
+    let button = document.createElement('button');
+    button.innerText = (pokemon.name);
+    button.classList.add("pokedexButton");
+    listItem.appendChild(button);
+    pokedex.appendChild(listItem);
+
+    //Listens for button click
+    button.addEventListener('click', function(event){
+        showDetails(pokemon)
+    })
+}
+function showDetails(pokemon){
+    console.log(pokemon);
+}
 return {
     add: add,
     getAll: getAll,
-    search: search
+    search: search,
+    addListItem: addListItem
     };
 })();
 
@@ -89,17 +101,15 @@ pokemonRepository.add({name: "Charmander", height: 2.00, type: ['fire']});
 pokemonRepository.add({name: "Charmander", type: ['fire']}); 
 pokemonRepository.add("Test");   
 
-//#####Legacy code, to be removed
-//ForEach to write out all pokemon on list currently
-/*pokemonRepository.getAll().forEach(function(pokemon) {
-    document.write('<p>' + pokemon.name  + '<br>' + "  height: (" + pokemon.height + ")" )
-    //If statement stating if it is a "big" pokemon
-    let big = pokemon.height > 6 ? '<br>' + "That's a big one!" : "";
-    document.write(big);
-    
-});*/
-// searchs for specific name
-//pokemonRepository.search("Charmander");
 
+pokemonRepository.getAll().forEach(function(pokemon) {
+   pokemonRepository.addListItem(pokemon);
+});
+
+     //   document.write('<p>' + pokemon.name  + '<br>' + "  height: (" + pokemon.height + ")"+'</p>' )
+    //     //If statement stating if it is a "big" pokemon
+    //     let big = pokemon.height > 6 ? '<br>' + "That's a big one!" : "";
+    //     document.write(big);
+//});
 
 
