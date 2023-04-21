@@ -1,21 +1,7 @@
 let pokemonRepository = (function(){
-    let pokemonlist= [
-        {
-            name: "Bulbasuar",
-            height: 2.04,
-            type: ['grass', 'poison']
-        },
-        {
-            name: "Ivyasuar",
-            height: 3.03,
-            type: ['grass', 'poison']
-        },
-        {
-            name: "Venusuar",
-            height: 6.07,
-            type: ['grass', 'poison']
-        }
-]
+    let pokemonlist= [];
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=151';
+
 // adds pokemon to the repository list
 function add(pokemon){
     //This should have allowed for a set of required information, and removed the need for the "IN" If statement
@@ -37,11 +23,11 @@ function add(pokemon){
     //checks to see if it's an object
     if (typeof pokemon !== "object"){
         console.log("error not an object");
-    } else if //checks if required information is part of that object
-    (("name" in pokemon && "height" in pokemon && "type" in pokemon) === false)
+     } else if //checks if required information is part of that object
+    (("name" in pokemon) === false)
     {
-        console.log("error does not contain required information, name, height, and type");
-
+        console.log("error does not contain required information: name");
+ 
     }  else { 
         pokemonlist.push(pokemon);
     }
@@ -84,26 +70,59 @@ function addListItem(pokemon){
         showDetails(pokemon)
     })
 }
+//shows the details on screen
 function showDetails(pokemon){
-    console.log(pokemon);
+    loadDetails(pokemon).then(function(){
+        console.log(pokemon);
+    });
 }
+
+function loadList(){
+    return fetch(apiUrl).then(function (response){
+        return response.json();
+    }).then(function(json){
+        json.results.forEach(function(item){
+            let pokemon = {
+                name: item.name,
+                detailsUrl: item.url
+            };
+            add(pokemon);
+        });
+    }).catch(function(e){
+        console.error(e);
+    })
+}
+
+//calls the details of the pokemon from the list
+function loadDetails(item) {
+    let url = item.detailsUrl;
+    return fetch(url).then(function (response){
+        return response.json();
+    }).then(function (details){
+        //adds the details to the item
+        item.imageUrl = details.sprites.front_default;
+        item.height = details.height;
+        item.types = details.types;
+    }).catch(function(e){
+        console.error(e);
+    });
+}
+
 return {
     add: add,
     getAll: getAll,
     search: search,
-    addListItem: addListItem
+    addListItem: addListItem,
+    loadList: loadList,
+    loadDetails: loadDetails,
+    showDetails: showDetails
     };
 })();
 
-pokemonRepository.add({name: "Charmander", height: 2.00, type: ['fire']});  
-
-// testing additions that need to be removed
-pokemonRepository.add({name: "Charmander", type: ['fire']}); 
-pokemonRepository.add("Test");   
-
-
-pokemonRepository.getAll().forEach(function(pokemon) {
-   pokemonRepository.addListItem(pokemon);
+pokemonRepository.loadList().then(function(){
+    pokemonRepository.getAll().forEach(function(pokemon) {
+        pokemonRepository.addListItem(pokemon);
+    });
 });
 
      //   document.write('<p>' + pokemon.name  + '<br>' + "  height: (" + pokemon.height + ")"+'</p>' )
