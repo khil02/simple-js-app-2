@@ -74,6 +74,11 @@ function addListItem(pokemon){
 function showDetails(pokemon){
     loadDetails(pokemon).then(function(){
         console.log(pokemon);
+        let parent = document.getElementById("pokedexPhoto");
+        let imgTag = '<img src="'+pokemon.imageUrl+'">';
+        parent.innerHTML = imgTag;
+        console.log(pokemon.imageUrl);
+        console.log(parent);
     });
 }
 
