@@ -4,22 +4,6 @@ let pokemonRepository = (function(){
 
 // adds pokemon to the repository list
 function add(pokemon){
-    //This should have allowed for a set of required information, and removed the need for the "IN" If statement
-    /*function trueInformation(pokemon){
-        const keysBaseline = ["name", "height", "type"];
-        const keysAdded = Object.keys(pokemon);
-
-        if (keysBaseline.length !== keysAdded.length){
-            return false;
-        }
-        for (let key of keysBaseline){
-            if (!pokemon[key]){
-                return false;
-            }
-        }
-        return true
-    } */
-
     //checks to see if it's an object
     if (typeof pokemon !== "object"){
         console.log("error not an object");
@@ -56,6 +40,7 @@ function search(findMe){
         return result;
     }
 }
+//Generates button list
 function addListItem(pokemon){
     let pokedex = document.querySelector('.pokemon-list');
     let listItem = document.createElement('li');
@@ -74,15 +59,28 @@ function addListItem(pokemon){
 function showDetails(pokemon){
     loadDetails(pokemon).then(function(){
         console.log(pokemon);
+        //loads the pokemon image
         let parent = document.getElementById("pokedexPhoto");
         let imgTag = '<img src="'+pokemon.imageUrl+'">';
         parent.innerHTML = imgTag;
-        console.log(pokemon.imageUrl);
-        console.log(parent);
     });
 }
+//Adds a loading GIF at the top of the body
+function showLoadingMessage(){
+    let loading = document.getElementById("loadingBox");
+    let loadingTag = '<img src="img/Ball-1s-200px.svg" id="loadingBall">';
+    loading.innerHTML = loadingTag;
+        
+}
+//Remove that loading GIF
+function removeLoadingMessage(){
+    let RemoveLoading = document.querySelector("#loadingBall");
+    RemoveLoading.parentElement.removeChild(RemoveLoading);
+}
 
+//pulls the pokemon data from the API and adds it to an internal array
 function loadList(){
+    showLoadingMessage();
     return fetch(apiUrl).then(function (response){
         return response.json();
     }).then(function(json){
@@ -91,9 +89,13 @@ function loadList(){
                 name: item.name,
                 detailsUrl: item.url
             };
+            
             add(pokemon);
+            
         });
+        removeLoadingMessage();
     }).catch(function(e){
+        removeLoadingMessage();
         console.error(e);
     })
 }
