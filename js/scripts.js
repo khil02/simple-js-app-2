@@ -30,11 +30,12 @@ function addListItem(pokemon){
     let button = document.createElement('button');
 
     button.innerText = (pokemon.name);
-    button.setAttribute("date-toggle", "modal");
+    button.setAttribute("data-toggle", "modal");
     button.setAttribute("data-target", "#modal-container");
     button.setAttribute("aria-pressed","false"); 
     button.setAttribute("autocomplete","off");
-    button.classList.add("pokedexButton", "list-group-item", "btn", "btn-outline-info");
+    $(button).addClass("pokedexButton list-group-item btn btn-outline-info");
+    $(listItem).addClass("d-flex flex-wrap col-1")
     listItem.appendChild(button);
     pokedex.appendChild(listItem);
 
