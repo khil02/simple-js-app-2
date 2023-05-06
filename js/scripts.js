@@ -164,7 +164,7 @@ function fancyMode(){
 let searchButton = document.querySelector("#search-button");
 searchButton.addEventListener("click", search);
 
-//searches list for matching name
+//searches list for matching name(s)
 function search(){
 
     let modalBody = $(".modal-body");
@@ -173,29 +173,38 @@ function search(){
     let findMe = document.querySelector('#searchFor').value;
     let result = pokemonlist.filter((e) => e.name.toLowerCase().startsWith(findMe.toLowerCase()));
 
-    if (result.length == 1){
-    console.log(result);
-    
-    //Prints out found information  
-     $("button:contains(result.name)").trigger("click");
-     console.log(result.detailsUrl);
+     if (result.length == 0){
 
-    } else if (result.length > 1 ) {
-    pokemonListElement = document.querySelector(".pokemon-list");
-    pokemonListElement.innerHTML = " ";
-    result.forEach(function (pokemon){
-        pokemonRepository.addListItem(pokemon);
-    });
-    }
-
-    // Returns as false and prints out Not Found
-    else { 
         resultScreen = $("<h1>Results</h1>");
         noneFound = $("<p>No results match that search</p>");
         modalTitle.append(resultScreen);
         modalBody.append(noneFound);
         console.log(result);
         $("#modal-container").modal('toggle');
+
+    //} else if (result.length == 1){
+    // console.log(result);
+    
+    // //Prints out found information if one result is found 
+    //  showDetails(result);
+
+    } else if (result.length >= 1 ) {
+        // reprints entire page if more than 1 match is found
+    pokemonListElement = document.querySelector(".pokemon-list");
+    pokemonListElement.innerHTML = " ";
+    result.forEach(function (pokemon){
+        addListItem(pokemon);
+    });
+    }
+
+    // Returns as false and prints out Not Found
+    else if (result.length >= 1 ) {
+        // reprints entire page if more than 1 match is found
+    pokemonListElement = document.querySelector(".pokemon-list");
+    pokemonListElement.innerHTML = " ";
+    result.forEach(function (pokemon){
+        addListItem(pokemon);
+    });
     }
 }
 
