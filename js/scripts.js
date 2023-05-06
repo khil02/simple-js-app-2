@@ -167,6 +167,10 @@ searchButton.addEventListener("click", search);
 //searches list for matching name(s)
 function search(){
 
+    let modalBody = $(".modal-body");
+    let modalTitle = $(".modal-title");
+    modalTitle.empty();
+    modalBody.empty();
 
     let findMe = document.querySelector('#searchFor').value;
     let result = pokemonlist.filter((e) => e.name.toLowerCase().startsWith(findMe.toLowerCase()));
@@ -175,8 +179,8 @@ function search(){
 
         resultScreen = $("<h1>Results</h1>");
         noneFound = $("<p>No results match that search</p>");
-        $(".modal-title").append(resultScreen);
-        $(".modal-body").append(noneFound);
+        modalTitle.append(resultScreen);
+        modalBody.append(noneFound);
         console.log(result);
         $("#modal-container").modal('toggle');
 
