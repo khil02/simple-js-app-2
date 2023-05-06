@@ -24,18 +24,21 @@
               <a class="nav-link" href="#">Home <span class="sr-only">Current</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Search <span class="sr-only">Search</span></a>
+              <form class="form-inline">
+                <input type="searchBox" class="form-control col-4" id="searchFor" name ="q" placeholder="Search">
+                <button id="search-button" class="btn btn-primary">Search</button>
+              </form>
             </li>
           </ul>
         </div>
       </nav>
     </header>
 
-    <h2>Pokemon Information
-      <button class="fancy-mode">Fancy mode: Off</button>
+    <h2> &nbsp Pokemon Information
+      <button class="fancy-mode" aria-label="Fancy mode toggle">Fancy mode: Off <span class="sr-only">changes colors and sprites</span></button>
     </h2>
 
-    <ul class="pokemon-list list-unstyled list-group d-flex flex-wrap"></ul>
+    <ul class="pokemon-list list-unstyled list-group list-group-flush"></ul>
    
  
      <!-- Modal -->

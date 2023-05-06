@@ -1,8 +1,8 @@
 let pokemonRepository = (function(){
     let pokemonlist= [];
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=151';
-    let modalContainer = document.querySelector("#modal-container");
-
+    let modalContent = document.querySelector(".modal-content");
+  
 
 // adds pokemon to the repository list
 function add(pokemon){
@@ -34,8 +34,8 @@ function addListItem(pokemon){
     button.setAttribute("data-target", "#modal-container");
     button.setAttribute("aria-pressed","false"); 
     button.setAttribute("autocomplete","off");
-    $(button).addClass("pokedexButton list-group-item btn btn-outline-info");
-    $(listItem).addClass("d-flex flex-wrap col-1")
+    $(button).addClass("pokedexButton list-group-item btn col btn-outline-info");
+    $(listItem).addClass("list-group-item")
     listItem.appendChild(button);
     pokedex.appendChild(listItem);
 
@@ -120,21 +120,22 @@ function showModal (pokemon){
     let pokemonWeight =$("<p>" +" Weight: " + (pokemon.weight*.1) + "kg" +"</p>");
 
     // Adds Types to an array by pulling them out of the object they are in
-    let typesArray = pokemon.types.map((type) => " " + type.type.name); 
+    let typesArray = pokemon.types.map((type) => " " + type.type.name.charAt(0).toUpperCase()+type.type.name.substr(1)); 
+    
     let pokemonTypes = $("<p>" + "Types:" +typesArray +"</p>");
 
     // Adds Abilities to an array
-    let abilitiesArray = pokemon.abilities.map((ability) => " " + ability.ability.name);
+    let abilitiesArray = pokemon.abilities.map((ability) => " " + ability.ability.name.charAt(0).toUpperCase()+ability.ability.name.substr(1));
     let pokemonAbilities = $("<p>" + "Abilities:" +abilitiesArray +"</p>");
     let pokemonImg = $("<img class = modal-image style='width:100%'>"); 
     // MUST adjust modalContainer to correct div
-    pokemonImg.attr("src", /*(modalContainer.classList.contains("fancy") ? pokemon.imageUrlFancy :*/ pokemon.imageUrl/*)*/)
+    
+    pokemonImg.attr("src", (modalContent.classList.contains("fancy") ? pokemon.imageUrlFancy : pokemon.imageUrl));  
     
 
     //Checks to see if fancy mode is on
     if (fancyOn){
-        modal.classList.add("fancy");
-        closeModalButton.classList.add("fancy");
+        $(".modal-content").addClass("fancy");
     };
 
     //builds Modal
@@ -148,11 +149,11 @@ function showModal (pokemon){
 
 let fancyModeButton = document.querySelector(".fancy-mode");
 let fancyOn = false;
-//fancyModeButton.addEventListener("click", fancyMode);
+fancyModeButton.addEventListener("click", fancyMode);
 
 //Toggles using sprites or official artwork
 function fancyMode(){
-    modalContainer.classList.toggle("fancy");
+    modalContent.classList.toggle("fancy");
     //toggles on and off
     fancyOn = !fancyOn;
     if (fancyOn){
@@ -162,10 +163,39 @@ function fancyMode(){
 };
 }
 
+
+let searchButton = document.querySelector("#search-button");
+let findMe = document.querySelector('#searchFor').value;
+searchButton.addEventListener("click", search);
+
+//searches list for matching name
+function search(findMe){
+    
+    let result = pokemonlist.filter((e) => e.name == findMe);
+    if (result.length !== 0){
+    console.log(result);
+    console.log(findMe);
+    
+    //Prints out found information
+    result.forEach(function(pokemon) {
+      });    
+    console.log(result);
+    console.log(findMe);
+    return result;
+    }
+    // Returns as false and prints out Not Found
+    else { 
+        result = false;
+        console.log(result);
+        return result;
+    }
+}
+
+
 return {
     add: add,
     getAll: getAll,
-    //search: search,
+    search: search,
     addListItem: addListItem,
     loadList: loadList,
     loadDetails: loadDetails,
