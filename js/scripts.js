@@ -165,16 +165,16 @@ function fancyMode(){
 
 
 let searchButton = document.querySelector("#search-button");
-let findMe = document.querySelector('#searchFor').value;
 searchButton.addEventListener("click", search);
 
 //searches list for matching name
-function search(findMe){
-    
-    let result = pokemonlist.filter((e) => e.name == findMe);
+function search(){
+
+    let findMe = document.querySelector('#searchFor').value;
+    let result = pokemonlist.filter((e) => e.name.toLowerCase().startsWith(findMe.toLowerCase()));
+
     if (result.length !== 0){
     console.log(result);
-    console.log(findMe);
     
     //Prints out found information
     result.forEach(function(pokemon) {
@@ -187,6 +187,7 @@ function search(findMe){
     else { 
         result = false;
         console.log(result);
+        console.log(findMe);
         return result;
     }
 }
