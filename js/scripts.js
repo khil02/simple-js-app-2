@@ -47,7 +47,6 @@ function addListItem(pokemon){
 //shows the details on screen
 function showDetails(pokemon){
     loadDetails(pokemon).then(function(){
-        //showModal (title, height, weight, types, img, imgFancy)
         showModal(pokemon);
     });
 }
@@ -128,10 +127,8 @@ function showModal (pokemon){
     let abilitiesArray = pokemon.abilities.map((ability) => " " + ability.ability.name.charAt(0).toUpperCase()+ability.ability.name.substr(1));
     let pokemonAbilities = $("<p>" + "Abilities:" +abilitiesArray +"</p>");
     let pokemonImg = $("<img class = modal-image style='width:100%'>"); 
-    // MUST adjust modalContainer to correct div
     
     pokemonImg.attr("src", (modalContent.classList.contains("fancy") ? pokemon.imageUrlFancy : pokemon.imageUrl));  
-    
 
     //Checks to see if fancy mode is on
     if (fancyOn){
@@ -170,25 +167,35 @@ searchButton.addEventListener("click", search);
 //searches list for matching name
 function search(){
 
+    let modalBody = $(".modal-body");
+    let modalTitle = $(".modal-title");
+
     let findMe = document.querySelector('#searchFor').value;
     let result = pokemonlist.filter((e) => e.name.toLowerCase().startsWith(findMe.toLowerCase()));
 
-    if (result.length !== 0){
+    if (result.length == 1){
     console.log(result);
     
-    //Prints out found information
-    result.forEach(function(pokemon) {
-      });    
-    console.log(result);
-    console.log(findMe);
-    return result;
+    //Prints out found information  
+     $("button:contains(result.name)").trigger("click");
+     console.log(result.detailsUrl);
+
+    } else if (result.length > 1 ) {
+    pokemonListElement = document.querySelector(".pokemon-list");
+    pokemonListElement.innerHTML = " ";
+    result.forEach(function (pokemon){
+        pokemonRepository.addListItem(pokemon);
+    });
     }
+
     // Returns as false and prints out Not Found
     else { 
-        result = false;
+        resultScreen = $("<h1>Results</h1>");
+        noneFound = $("<p>No results match that search</p>");
+        modalTitle.append(resultScreen);
+        modalBody.append(noneFound);
         console.log(result);
-        console.log(findMe);
-        return result;
+        $("#modal-container").modal('toggle');
     }
 }
 
