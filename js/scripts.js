@@ -184,11 +184,11 @@ function search(){
         console.log(result);
         $("#modal-container").modal('toggle');
 
-    //} else if (result.length == 1){
-    // console.log(result);
+    } else if (result.length == 1){
     
     // //Prints out found information if one result is found 
-    //  showDetails(result);
+      showDetails(result[0]);
+      $("#modal-container").modal('toggle');
 
     } else if (result.length >= 1 ) {
         // reprints entire page if more than 1 match is found
