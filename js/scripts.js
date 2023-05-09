@@ -3,7 +3,38 @@ let pokemonRepository = (function(){
     let pokemonlist= [];
     let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=151";
     let modalContent = document.querySelector(".modal-content");
-  
+    
+    document.querySelectorAll('.gen').forEach(button => {
+        button.addEventListener('click', () => {
+            let gen = button.value;
+            console.log(gen);
+            generation(gen)
+            
+        });
+    });
+       
+    function generation(gen){
+        let apiArray = ["https://pokeapi.co/api/v2/pokemon/?limit=151",
+         "https://pokeapi.co/api/v2/pokemon/?limit=100&offset=151",
+        "https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251",
+        "https://pokeapi.co/api/v2/pokemon/?limit=106&offset=386",
+        "https://pokeapi.co/api/v2/pokemon/?limit=155&offset=493",
+        "https://pokeapi.co/api/v2/pokemon/?limit=71&offset=649",
+        "https://pokeapi.co/api/v2/pokemon/?limit=87&offset=721",
+        "https://pokeapi.co/api/v2/pokemon/?limit=95&offset=809",
+        "https://pokeapi.co/api/v2/pokemon/?limit=103&offset=905"];
+        apiUrl = apiArray[gen];
+
+        pokemonListElement = document.querySelector(".pokemon-list");
+        pokemonListElement.innerHTML = " ";
+        pokemonlist= []
+         loadList().then(function(){
+             getAll().forEach(function(pokemon) {
+                 addListItem(pokemon);
+             })
+         })
+         }
+    
 
 // adds pokemon to the repository list
 function add(pokemon){
@@ -38,7 +69,7 @@ function addListItem(pokemon){
     // eslint-disable-next-line no-undef
     $(button).addClass("pokedexButton list-group-item btn col btn-outline-info");
     // eslint-disable-next-line no-undef
-    $(listItem).addClass("list-group-item")
+    $(listItem).addClass("list-group-item col")
     listItem.appendChild(button);
     pokedex.appendChild(listItem);
 
