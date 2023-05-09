@@ -1,0 +1,103 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+body{
+    background-color: rgb(191, 30, 30)
+}
+h2{
+    background-color: rgb(132, 2, 24);
+    border: #282727;
+    border: solid;
+}
+.pokedexNavbar{
+    color: whitesmoke;
+    background-color: rgb(191, 30, 30);
+    border: 3px solid rgb(66, 66, 66);
+    padding-left: 5px;
+}
+.navbar-nav {
+    color: whitesmoke;
+    background-color: rgb(132, 2, 24);
+    border: 3px solid rgb(28, 27, 27);
+    padding-left: 5px;
+}
+.navbar-toggler{
+    background-color: rgb(132, 2, 24);
+}
+
+h1{
+    color: whitesmoke;
+    background-color: rgb(191, 30, 30);
+    padding-left: 5px;
+}
+.pokemon-list{
+/* Grid fallback start */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: wrap;
+        -ms-flex: wrap;
+            flex: wrap;
+/* end */
+    display: -ms-grid;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    text-align: center;
+}
+.list-group-item{
+    display: unset;
+    background: rgb(191, 30, 30);
+    border: none;
+}
+.pokedexButton {
+    background-color:darkblue;
+    padding: 16px 32px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border: none;
+    margin: 4px 2px;
+    display: wrap; 
+    border: 3px solid rgb(191, 30, 30);
+}
+.modal-content{
+    background-color: rgb(191, 30, 30); 
+    border: 5px solid rgb(66, 66, 66);
+}
+.modal-header{
+    
+    border-bottom: 5px solid rgb(66, 66, 66);
+}
+.modal-body{
+    border-bottom: 2px solid rgb(66, 66, 66);
+    color: whitesmoke;
+}
+.modal-image{
+    border: 3px solid rgb(66, 66, 66);
+    background-color: rgb(164, 161, 161);
+}
+.modal-footer{
+    border-top: 3px solid rgb(66, 66, 66);
+} 
+
+.fancy{
+    background-color: goldenrod;
+}
+
+.fancy h1{
+   
+    background-color: goldenrod;
+}
+  
+.fancy-mode {
+    float: right;
+    -webkit-appearance: none;
+    border: 0;
+    background: none;
+    color: #777;
+    text-decoration: underline;
+  }

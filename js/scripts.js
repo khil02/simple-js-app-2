@@ -7,7 +7,7 @@ let pokemonRepository = (function(){
 
 // adds pokemon to the repository list
 function add(pokemon){
-    //checks to see if it's an object
+    //checks to see if it's an object   
     if (typeof pokemon !== "object"){
         console.log("error not an object");
      } else if //checks if required information is part of that object
