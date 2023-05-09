@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 let pokemonRepository = (function(){
     let pokemonlist= [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=151';
+    let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=151";
     let modalContent = document.querySelector(".modal-content");
   
 
@@ -25,22 +26,24 @@ function getAll(){
 
 //Generates button list
 function addListItem(pokemon){
-    let pokedex = document.querySelector('.pokemon-list');
-    let listItem = document.createElement('li');
-    let button = document.createElement('button');
+    let pokedex = document.querySelector(".pokemon-list");
+    let listItem = document.createElement("li");
+    let button = document.createElement("button");
 
     button.innerText = (pokemon.name);
     button.setAttribute("data-toggle", "modal");
     button.setAttribute("data-target", "#modal-container");
     button.setAttribute("aria-pressed","false"); 
     button.setAttribute("autocomplete","off");
+    // eslint-disable-next-line no-undef
     $(button).addClass("pokedexButton list-group-item btn col btn-outline-info");
+    // eslint-disable-next-line no-undef
     $(listItem).addClass("list-group-item")
     listItem.appendChild(button);
     pokedex.appendChild(listItem);
 
     //Listens for button click
-    button.addEventListener('click', () => {
+    button.addEventListener("click", () => {
         showDetails(pokemon)
     });
 }
@@ -53,6 +56,7 @@ function showDetails(pokemon){
 //Adds a loading GIF at the top of the body
 function showLoadingMessage(){
     let loading = document.getElementById("loadingBox");
+    // eslint-disable-next-line quotes
     let loadingTag = '<img src="img/Ball-1s-200px.svg" id="loadingBall">';
     loading.innerHTML = loadingTag;
         
@@ -95,6 +99,7 @@ function loadDetails(item) {
         item.height = details.height;
         item.weight = details.weight;
         item.types = details.types;
+        // eslint-disable-next-line quotes
         item.imageUrlFancy = details.sprites.other['official-artwork'].front_default;
         item.abilities = details.abilities;
 
@@ -133,7 +138,7 @@ function showModal (pokemon){
     //Checks to see if fancy mode is on
     if (fancyOn){
         $(".modal-content").addClass("fancy");
-    };
+    }
 
     //builds Modal
     modalTitle.append(pokemonName);
@@ -157,7 +162,7 @@ function fancyMode(){
     fancyModeButton.innerText = "Fancy Mode: On"
 } else {
     fancyModeButton.innerText = "Fancy Mode: Off"
-};
+}
 }
 
 
@@ -172,9 +177,10 @@ function search(){
     modalTitle.empty();
     modalBody.empty();
 
-    let findMe = document.querySelector('#searchFor').value;
+    let findMe = document.querySelector("#searchFor").value;
     let result = pokemonlist.filter((e) => e.name.toLowerCase().startsWith(findMe.toLowerCase()));
 
+    // Returns as false and prints out Not Found
      if (result.length == 0){
 
         resultScreen = $("<h1>Results</h1>");
@@ -182,26 +188,16 @@ function search(){
         modalTitle.append(resultScreen);
         modalBody.append(noneFound);
         console.log(result);
-        $("#modal-container").modal('toggle');
+        $("#modal-container").modal("toggle");
 
     } else if (result.length == 1){
     
-    // //Prints out found information if one result is found 
+    //Prints out found information if one result is found 
       showDetails(result[0]);
-      $("#modal-container").modal('toggle');
+      $("#modal-container").modal("toggle");
 
     } else if (result.length >= 1 ) {
-        // reprints entire page if more than 1 match is found
-    pokemonListElement = document.querySelector(".pokemon-list");
-    pokemonListElement.innerHTML = " ";
-    result.forEach(function (pokemon){
-        addListItem(pokemon);
-    });
-    }
-
-    // Returns as false and prints out Not Found
-    else if (result.length >= 1 ) {
-        // reprints entire page if more than 1 match is found
+     // reprints entire page if more than 1 match is found
     pokemonListElement = document.querySelector(".pokemon-list");
     pokemonListElement.innerHTML = " ";
     result.forEach(function (pokemon){
