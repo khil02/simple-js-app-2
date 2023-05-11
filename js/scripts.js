@@ -1,39 +1,46 @@
 /* eslint-disable no-undef */
 let pokemonRepository = (function(){
     let pokemonlist= [];
+    let pokemonMasterList=[];
     let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=151";
     let modalContent = document.querySelector(".modal-content");
-    
+    let gen = 0;
+
+    //portions of the api that match each generation
+    let apiArray = ["https://pokeapi.co/api/v2/pokemon/?limit=151",
+    "https://pokeapi.co/api/v2/pokemon/?limit=100&offset=151",
+   "https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251",
+   "https://pokeapi.co/api/v2/pokemon/?limit=106&offset=386",
+   "https://pokeapi.co/api/v2/pokemon/?limit=155&offset=493",
+   "https://pokeapi.co/api/v2/pokemon/?limit=71&offset=649",
+   "https://pokeapi.co/api/v2/pokemon/?limit=87&offset=721",
+   "https://pokeapi.co/api/v2/pokemon/?limit=95&offset=809",
+   "https://pokeapi.co/api/v2/pokemon/?limit=103&offset=905"];
+   
+    let dropdown = document.querySelector("#generation-dropdown");
+
+    //pulls the value from the drop down button to tell the function which array to use
     document.querySelectorAll('.gen').forEach(button => {
         button.addEventListener('click', () => {
-            let gen = button.value;
-            console.log(gen);
-            generation(gen)
-            
+            gen = button.value;
+            genText = button.innerText;
+            generation(gen);
         });
     });
-       
+       //loads generations section of API
     function generation(gen){
-        let apiArray = ["https://pokeapi.co/api/v2/pokemon/?limit=151",
-         "https://pokeapi.co/api/v2/pokemon/?limit=100&offset=151",
-        "https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251",
-        "https://pokeapi.co/api/v2/pokemon/?limit=106&offset=386",
-        "https://pokeapi.co/api/v2/pokemon/?limit=155&offset=493",
-        "https://pokeapi.co/api/v2/pokemon/?limit=71&offset=649",
-        "https://pokeapi.co/api/v2/pokemon/?limit=87&offset=721",
-        "https://pokeapi.co/api/v2/pokemon/?limit=95&offset=809",
-        "https://pokeapi.co/api/v2/pokemon/?limit=103&offset=905"];
         apiUrl = apiArray[gen];
+        dropdown.innerText = genText;
 
         pokemonListElement = document.querySelector(".pokemon-list");
         pokemonListElement.innerHTML = " ";
-        pokemonlist= []
-         loadList().then(function(){
+        pokemonlist= [];
+         
              getAll().forEach(function(pokemon) {
                  addListItem(pokemon);
              })
-         })
          }
+         
     
 
 // adds pokemon to the repository list
@@ -48,10 +55,15 @@ function add(pokemon){
  
     }  else { 
         pokemonlist.push(pokemon);
+       
     }
 }
 //outputs a full list of the pokemon
 function getAll(){
+    if (loadingTest){
+    removeLoadingMessage();
+    }
+    pokemonlist=pokemonMasterList[gen];
     return pokemonlist;
 }
 
@@ -85,8 +97,10 @@ function showDetails(pokemon){
     });
 }
 //Adds a loading GIF at the top of the body
+let loadingTest = false;
 function showLoadingMessage(){
     let loading = document.getElementById("loadingBox");
+     loadingTest = true;
     // eslint-disable-next-line quotes
     let loadingTag = '<img src="img/Ball-1s-200px.svg" id="loadingBall">';
     loading.innerHTML = loadingTag;
@@ -94,6 +108,7 @@ function showLoadingMessage(){
 }
 //Remove that loading GIF
 function removeLoadingMessage(){
+    loadingTest = false;
     let RemoveLoading = document.querySelector("#loadingBall");
     RemoveLoading.parentElement.removeChild(RemoveLoading);
 }
@@ -101,7 +116,7 @@ function removeLoadingMessage(){
 //pulls the pokemon data from the API and adds it to an internal array
 function loadList(){
     showLoadingMessage();
-    return fetch(apiUrl).then(function (response){
+    return Promise.all(apiArray.map(api => fetch(api).then(function (response){
         return response.json();
     }).then(function(json){
         json.results.forEach(function(item){
@@ -110,13 +125,17 @@ function loadList(){
                 name: item.name.charAt(0).toUpperCase()+item.name.substr(1),
                 detailsUrl: item.url
             };
+            
             add(pokemon);
         });
-        removeLoadingMessage();
+        //adds pokemonlist to a master array for each generation pulled from the api
+        pokemonMasterList.push(pokemonlist)
+        pokemonlist=[];
+        
     }).catch(function(e){
         removeLoadingMessage();
         console.error(e);
-    })
+    })))
 }
 
 //calls the details of the pokemon from the list
@@ -207,9 +226,13 @@ function search(){
     let modalTitle = $(".modal-title");
     modalTitle.empty();
     modalBody.empty();
+    let result = [];
 
     let findMe = document.querySelector("#searchFor").value;
-    let result = pokemonlist.filter((e) => e.name.toLowerCase().startsWith(findMe.toLowerCase()));
+    for (let i = 0; i < pokemonMasterList.length; i++){
+     pokemonlist = pokemonMasterList[i].filter((e) => e.name.toLowerCase().startsWith(findMe.toLowerCase()));
+     result.push(...pokemonlist);
+}
 
     // Returns as false and prints out Not Found
      if (result.length == 0){
@@ -250,6 +273,7 @@ return {
 })();
 
 pokemonRepository.loadList().then(function(){
+    
     pokemonRepository.getAll().forEach(function(pokemon) {
         pokemonRepository.addListItem(pokemon);
     });
