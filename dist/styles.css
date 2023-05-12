@@ -1,9 +1,3 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 4 version
-*/
 body{
     background-color: rgb(191, 30, 30)
 }
@@ -33,20 +27,7 @@ h1{
     background-color: rgb(191, 30, 30);
     padding-left: 5px;
 }
-.pokemon-list{
-/* Grid fallback start */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: wrap;
-        -ms-flex: wrap;
-            flex: wrap;
-/* end */
-    display: -ms-grid;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    text-align: center;
-}
+
 .list-group-item{
     display: unset;
     background: rgb(191, 30, 30);
@@ -89,12 +70,10 @@ h1{
 }
 
 .fancy h1{
-   
     background-color: goldenrod;
 }
   
 .fancy-mode {
-    float: right;
     -webkit-appearance: none;
     border: 0;
     background: none;
